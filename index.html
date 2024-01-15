@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'poppins', sans-serif;
+        }
+
+        body {
+            color: snow;
+            background: linear-gradient(to top, rgba(71, 3, 3, 0.7), rgba(83, 44, 225, 0.5)), url("temp_bg.jpeg");
+            background-size: cover;
+        }
+
+        h1 {
+            margin: 5px;
+            padding: 20px;
+            font-size: 2rem;
+            color: beige;
+        } 
+
+        .temperature {
+           /* background: linear-gradient(rgba(71, 3, 3, 0.5), rgba(83, 44, 225, 0.7));*/
+           background-color: rgb(255, 255, 255,0.4);
+            background-size: cover;
+            background-position: center center;
+            margin-top: 2%;
+            padding: 20px;
+            margin-left: 25%;
+            margin-right: 25%;
+            margin-bottom: 10%;
+            padding-bottom: 50px;
+            border-width: 5px;
+            box-shadow: 15px 10px 5px black;
+            border-radius: 10%;
+        }
+
+        .temperature td {
+            margin: 2px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .input-class input {
+            width: 400px;
+            height: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(bisque, white);
+            border: 2px;
+            border-radius: 20px;
+            position: relative;
+            color: black;
+            justify-content: center;   
+            text-align: center; 
+        }
+
+        .input-class input:hover {
+            width: 420px;
+            height: 55px;
+        }
+
+        .Conversion_btn label, #resultLabel {
+            font-size: 1.5rem;
+            color: rgba(94, 55, 3, 0.866);
+            font-weight: bold;
+            margin: 3px;
+            padding: 20px;
+        }
+
+        .Conversion_btn input, .submit button {
+            margin: 1px;
+            border: 2px;
+            padding: 10px;
+            background-color: black;
+            width: 200px;
+            font-size: 1.5rem;
+            color: aliceblue;
+            cursor: pointer;
+        }
+
+        .Conversion_btn input:hover, .submit button:hover {
+            background: linear-gradient(rgba(128, 128, 216, 0.681), rgba(117, 20, 20, 0.506));
+            color: aliceblue;
+            width: 210px;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <h1>Temperature Converter</h1>
+        <div class="temperature">
+            <table>
+                <!-- Input Row -->
+                <tr>
+                    <td class="input-class"> 
+                        <input type="text" placeholder="Enter the temperature" id="temperatureInput">
+                    </td>
+                </tr>
+                <!-- Unit Selection Row -->
+                <tr>
+                    <td class="Conversion_btn">
+                        <label>Select Unit</label><br>
+                        <input type="button" value="Celsius" onclick="selectUnit('Fahrenheit')">
+                        <input type="button" value="Fahrenheit" onclick="selectUnit('Celsius')">
+                    </td>
+                </tr>
+                <!-- Conversion Button Row -->
+                <tr>
+                    <td class="submit">
+                        <button onclick="convertTemperature()">Convert</button>
+                    </td>
+                </tr>
+                <!-- Result Row -->
+                <tr>
+                    <td>
+                        <label id="resultLabel">Result : </label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </center>
+    <script>
+        var selectedUnit = 'Celsius';
+
+        function selectUnit(unit) {
+            selectedUnit = unit;
+            // Reset the selected class for all buttons
+            var buttons = document.querySelectorAll('.Conversion_btn input');
+            buttons.forEach(function (btn) {
+                btn.classList.remove('selected');
+            });
+            // Add the selected class to the clicked button
+            document.querySelector('.Conversion_btn input[value="' + unit + '"]').classList.add('selected');
+        }
+
+        function convertTemperature() {
+            var temperatureInput = document.getElementById('temperatureInput').value;
+            var resultLabel = document.getElementById('resultLabel');
+            
+            if (isNaN(temperatureInput)) {
+                resultLabel.textContent = 'Please enter a valid number.';
+            } else {
+                temperatureInput = parseFloat(temperatureInput); // Ensure it's a number
+                var convertedTemperature = (selectedUnit === 'Celsius') ? convertToFahrenheit(temperatureInput) : convertToCelsius(temperatureInput);
+                if (selectedUnit == "Celsius") {
+                    resultLabel.textContent = 'Result: ' + convertedTemperature.toFixed(2) + ' ' + "°F";
+                } else {
+                    resultLabel.textContent = 'Result: ' + convertedTemperature.toFixed(2) + ' ' + "°C";
+                }
+            }
+        }
+
+        function convertToFahrenheit(celsius) {
+            return (celsius * 9/5) + 32;
+        }
+
+        function convertToCelsius(fahrenheit) {
+            return (fahrenheit - 32) * 5/9;
+        }
+    </script>
+</body>
+</html>
+
